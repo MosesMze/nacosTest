@@ -1,0 +1,22 @@
+server:
+  port: 9100
+spring:
+  application:
+    name: cloud-zuul
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
+        file-extension: yml
+        shared-configs:
+          - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+zuul:
+  routes:
+    service-provider:
+      serviceId: service-provider
+      stripPrefix: false
+      path: /provider/**
